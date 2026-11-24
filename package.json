@@ -1,0 +1,56 @@
+{
+  "name": "sample-vpcless-lambda-web-functions-aurora-dsql",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A VPC-less application on AWS Lambda Web Functions and Amazon Aurora DSQL",
+  "license": "MIT-0",
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "lint:sql": "node node_modules/@aws/dsql-lint/bin/dsql-lint migrations/*.sql",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "build": "vite build --config web/vite.config.ts && node scripts/build-server.mjs",
+    "synth": "npm run typecheck && npm run lint:sql && npm run build && cdk synth --no-lookups --quiet",
+    "deploy": "npm run typecheck && npm run lint:sql && npm run build && cdk deploy --no-lookups",
+    "destroy": "cdk destroy"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ssm": "3.1168.0",
+    "@aws/aurora-dsql-node-postgres-connector": "0.1.9",
+    "@hono/node-server": "2.1.8",
+    "@hono/zod-openapi": "1.6.3",
+    "@mantine/core": "9.8.0",
+    "@mantine/hooks": "9.8.0",
+    "aws-jwt-verify": "5.2.1",
+    "hono": "4.13.18",
+    "kysely": "0.29.9",
+    "oidc-client-ts": "3.5.0",
+    "pg": "8.23.1",
+    "pg-connection-string": "2.14.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-oidc-context": "3.3.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@aws/dsql-lint": "0.2.22",
+    "@types/aws-lambda": "8.10.164",
+    "@types/node": "24.19.2",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "aws-cdk": "2.1148.1",
+    "aws-cdk-lib": "2.276.0",
+    "cdk-nag": "3.0.2",
+    "constructs": "10.8.1",
+    "esbuild": "0.28.2",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "vitest": "5.1.0"
+  }
+}

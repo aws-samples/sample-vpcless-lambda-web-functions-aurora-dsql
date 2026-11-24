@@ -1,0 +1,88 @@
+body {
+  font-variant-numeric: tabular-nums;
+}
+
+/* A 2px focus outline that meets the 3:1 non-text contrast. */
+.mantine-Input-input:focus-visible,
+.mantine-Input-input:focus {
+  outline: 2px solid var(--app-focus);
+  outline-offset: -1px;
+}
+
+.mantine-focus-auto:focus-visible {
+  outline-color: var(--app-focus);
+}
+
+/* Keep disabled button labels readable even though WCAG exempts disabled
+   controls. */
+.mantine-Button-root[data-disabled]:not([data-loading]) {
+  background: transparent;
+  border-color: var(--mantine-color-default-border);
+  color: var(--mantine-color-dimmed);
+}
+
+/* Label weights live here, not in the theme: a theme `styles.label` becomes an
+   inline style and beats these rules. */
+.mantine-Button-label {
+  font-weight: 400;
+}
+
+.mantine-Button-root[data-variant='filled'] .mantine-Button-label {
+  font-weight: 500;
+}
+
+.app-delete .mantine-Button-label {
+  font-weight: 600;
+}
+
+.app-notice {
+  border: 0;
+  border-left: 2px solid var(--mantine-color-text);
+  border-radius: 0;
+  padding: 0 0 0 var(--mantine-spacing-sm);
+}
+
+.app-wrap {
+  word-break: auto-phrase;
+  overflow-wrap: anywhere;
+}
+
+.app-pretty {
+  text-wrap: pretty;
+}
+
+.app-grow {
+  flex: 1;
+}
+
+.app-edit-input {
+  flex: 1 1 16rem;
+}
+
+/* flex-basis 0, not a fixed basis: Edit/Delete stay on the first line and the
+   text wraps under them. */
+.app-row-main {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.app-row {
+  border-bottom: 1px solid var(--mantine-color-default-border);
+}
+
+.app-danger.mantine-Button-root {
+  background-color: var(--app-danger-bg);
+  color: var(--app-danger-color);
+}
+
+/* Always underlined so it reads as a link on touch screens too, without hover. */
+.app-list-name {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-color: currentColor;
+}
+
+/* Each count stays in one piece, so the line breaks at the "·" between them. */
+.app-nowrap {
+  white-space: nowrap;
+}

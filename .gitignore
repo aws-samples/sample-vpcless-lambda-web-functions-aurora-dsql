@@ -1,0 +1,9 @@
+node_modules/
+dist/
+cdk.out/
+*.log
+.DS_Store
+
+# Guard: never commit a token or password helper file (README steps write these outside the repo).
+token.txt
+*.cli-input.json
