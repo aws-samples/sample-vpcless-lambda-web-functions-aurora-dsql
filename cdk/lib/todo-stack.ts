@@ -320,7 +320,16 @@ export class TodoStack extends cdk.Stack {
       value: `aws cognito-idp admin-create-user --user-pool-id ${userPool.userPoolId} --region ${cdk.Aws.REGION} --username alice --user-attributes Name=email,Value=you@example.com Name=email_verified,Value=true`,
     });
 
-    acknowledgeNagFindings({ stack: this, codeBucket, distribution, userPool, migrateFunction, codeCopyRole, providerRole });
+    acknowledgeNagFindings({
+      stack: this,
+      codeBucket,
+      distribution,
+      userPool,
+      migrateFunction,
+      migrationProvider,
+      codeCopyRole,
+      providerRole,
+    });
   }
 }
 
