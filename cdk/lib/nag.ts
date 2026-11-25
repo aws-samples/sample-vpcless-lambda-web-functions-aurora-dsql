@@ -20,8 +20,7 @@ export interface NagTargets {
 }
 
 const HELPER = 'The grant is added by AWS CDK, not by this sample.';
-const CDK_RUNTIME =
-  'AWS CDK creates this function with lambda.determineLatestNodeRuntime(), nodejs24.x in aws-cdk-lib 2.278.0, and has no option to set its runtime.';
+const CDK_RUNTIME = 'Created by AWS CDK, which sets the runtime.';
 
 /** The code-copy singleton that WebFunctionCode.fromAssetToProvidedBucket adds at the stack root. */
 function codeCopyFunction(stack: cdk.Stack): IConstruct {
@@ -70,12 +69,6 @@ export function acknowledgeNagFindings(t: NagTargets): void {
     'No threat protection, which needs the Cognito Plus feature plan at extra cost. Turn it on for production if you need it.',
   );
 
-  // aws-cdk-lib 2.278.0 added Runtime.NODEJS_26_X, so cdk-nag AwsSolutions-L1 flags these nodejs24.x functions.
-  ack(
-    t.migrateFunction,
-    'AwsSolutions-L1',
-    'nodejs24.x to match the Web Function: WebFunctionRuntime in aws-cdk-lib 2.278.0 defines only NODEJS_24_X. Move both to Node.js 26 together.',
-  );
   ack(t.migrationProvider.node.findChild('framework-onEvent'), 'AwsSolutions-L1', CDK_RUNTIME);
   ack(codeCopyFunction(t.stack), 'AwsSolutions-L1', CDK_RUNTIME);
 
