@@ -5,6 +5,7 @@ import type * as cognito from 'aws-cdk-lib/aws-cognito';
 import type * as iam from 'aws-cdk-lib/aws-iam';
 import type * as lambda from 'aws-cdk-lib/aws-lambda';
 import type * as s3 from 'aws-cdk-lib/aws-s3';
+import type * as cr from 'aws-cdk-lib/custom-resources';
 import type { IConstruct } from 'constructs';
 
 export interface NagTargets {
@@ -13,11 +14,21 @@ export interface NagTargets {
   distribution: cloudfront.Distribution;
   userPool: cognito.UserPool;
   migrateFunction: lambda.Function;
+  migrationProvider: cr.Provider;
   codeCopyRole: iam.IRole;
   providerRole: iam.IRole;
 }
 
 const HELPER = 'The grant is added by AWS CDK, not by this sample.';
+const CDK_RUNTIME = 'Created by AWS CDK, which sets the runtime.';
+
+/** The code-copy singleton that WebFunctionCode.fromAssetToProvidedBucket adds at the stack root. */
+function codeCopyFunction(stack: cdk.Stack): IConstruct {
+  const found = stack.node.children.filter((child) => child.node.id.startsWith('Custom::S3ObjectCopy'));
+  const [only] = found;
+  if (!only || found.length !== 1) throw new Error(`Expected one Custom::S3ObjectCopy function, found ${found.length}.`);
+  return only;
+}
 
 const ack = (scope: IConstruct, id: string, reason: string) => cdk.Validations.of(scope).acknowledge({ id, reason });
 
@@ -57,6 +68,9 @@ export function acknowledgeNagFindings(t: NagTargets): void {
     'AwsSolutions-COG8',
     'No threat protection, which needs the Cognito Plus feature plan at extra cost. Turn it on for production if you need it.',
   );
+
+  ack(t.migrationProvider.node.findChild('framework-onEvent'), 'AwsSolutions-L1', CDK_RUNTIME);
+  ack(codeCopyFunction(t.stack), 'AwsSolutions-L1', CDK_RUNTIME);
 
   // S3 grants that fromAssetToProvidedBucket adds to copyOptions.role; its API cannot narrow them.
   for (const finding of [

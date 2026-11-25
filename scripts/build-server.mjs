@@ -9,7 +9,7 @@ import { cpSync, rmSync, writeFileSync } from 'node:fs';
 const common = {
   bundle: true,
   platform: 'node',
-  target: 'node24',
+  target: 'node26',
   format: 'esm',
   // `pg` only loads pg-native when asked to; it is not installed.
   external: ['pg-native'],

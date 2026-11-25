@@ -118,7 +118,7 @@ export class TodoStack extends cdk.Stack {
     });
     const migrateFunction = new lambda.Function(this, 'MigrateFunction', {
       description: 'Applies migrations/*.sql to Aurora DSQL during cdk deploy (admin role)',
-      runtime: lambda.Runtime.NODEJS_24_X,
+      runtime: lambda.Runtime.NODEJS_26_X,
       architecture: lambda.Architecture.ARM_64,
       handler: 'index.handler',
       code: lambda.Code.fromAsset(props.migrateCodePath),
@@ -153,7 +153,7 @@ export class TodoStack extends cdk.Stack {
     const webFunction = new lambda.WebFunction(this, 'WebFunction', {
       webFunctionName: functionName,
       revisionDescription: 'Deployed by npm run deploy',
-      runtime: lambda.WebFunctionRuntime.NODEJS_24_X,
+      runtime: lambda.WebFunctionRuntime.of('nodejs26.x'),
       code: lambda.WebFunctionCode.fromAssetToProvidedBucket(codeBucket, props.serverCodePath, {
         copyOptions: { logGroup: codeCopyLogs, role: codeCopyRole },
       }),
@@ -320,7 +320,16 @@ export class TodoStack extends cdk.Stack {
       value: `aws cognito-idp admin-create-user --user-pool-id ${userPool.userPoolId} --region ${cdk.Aws.REGION} --username alice --user-attributes Name=email,Value=you@example.com Name=email_verified,Value=true`,
     });
 
-    acknowledgeNagFindings({ stack: this, codeBucket, distribution, userPool, migrateFunction, codeCopyRole, providerRole });
+    acknowledgeNagFindings({
+      stack: this,
+      codeBucket,
+      distribution,
+      userPool,
+      migrateFunction,
+      migrationProvider,
+      codeCopyRole,
+      providerRole,
+    });
   }
 }
 
