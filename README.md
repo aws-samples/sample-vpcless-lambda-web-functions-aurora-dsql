@@ -24,7 +24,7 @@ There are three tables: `users`, `lists`, and `todos` ([`migrations/`](migration
 
 ## Prerequisites
 
-- Node.js 24 or later, npm, and AWS CLI v2 with credentials
+- Node.js 26 or later, npm, and AWS CLI v2 with credentials
 - A Region with both [Lambda Web Functions](https://docs.aws.amazon.com/lambda/latest/dg/web-functions.html) and [Aurora DSQL](https://docs.aws.amazon.com/aurora-dsql/latest/userguide/what-is-aurora-dsql.html) ([Services by Region](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/))
 - The account and Region you deploy to come from your AWS CLI configuration. With a named profile, run `export AWS_PROFILE=<name>` first
 
