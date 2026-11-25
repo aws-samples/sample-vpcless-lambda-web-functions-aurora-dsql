@@ -24,7 +24,7 @@ AWS Lambda Web Functions と Amazon Aurora DSQL で動くアプリケーショ�
 
 ## 前提条件
 
-- Node.js 24 以降、npm、認証情報を設定した AWS CLI v2
+- Node.js 26 以降、npm、認証情報を設定した AWS CLI v2
 - [Lambda Web Functions](https://docs.aws.amazon.com/lambda/latest/dg/web-functions.html) と [Aurora DSQL](https://docs.aws.amazon.com/aurora-dsql/latest/userguide/what-is-aurora-dsql.html) の両方が使えるリージョン([リージョンごとのサービス](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/))
 - デプロイ先のアカウントとリージョンは AWS CLI の設定で決まります。名前付きプロファイルを使うときは、先に `export AWS_PROFILE=<name>` を実行します
 
